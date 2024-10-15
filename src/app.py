@@ -5,8 +5,10 @@ from modules.message_handler import send_message
 from modules.get_model import call_update_window
 from functools import partial
 
+analyze = False
+
 # Configuração do modelo
-modelPath = r"../sim-mathica/src/models"
+modelPath = r"../docchat-llm/src/models"
 pipe = pipeline(
     "text-generation",
     model=modelPath,
@@ -25,7 +27,7 @@ analysis_menu.add_command(label="Pesquisar em documento",
                           accelerator="Ctrl+O",
                           command="")
 model_menu = tk.Menu(menu_bar, tearoff=False)
-model_menu.add_command(label="Update",
+model_menu.add_command(label="Atualizar",
                        accelerator="Ctrl+U",
                        command=partial(call_update_window, root))
 
@@ -42,11 +44,11 @@ loading_label.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
 send_button = tk.Button(root,
                         text="Enviar mensagem",
                         command= partial(send_message,
-                                         user_entry, chat_window, loading_label, root, pipe))
+                                         user_entry, chat_window, loading_label, root, pipe, analyze))
 send_button.grid(row=1, column=1, padx=10, pady=10, sticky="ew")
 
-menu_bar.add_cascade(menu=model_menu, label="Model")
-menu_bar.add_cascade(menu=analysis_menu, label="Análisar")
+menu_bar.add_cascade(menu=model_menu, label="Modelo")
+menu_bar.add_cascade(menu=analysis_menu, label="Analisar")
 root.config(menu=menu_bar)
 
 root.grid_columnconfigure(0, weight=1)
