@@ -10,7 +10,7 @@ Execute os comandos abaixo via terminal de comando, de dentro da pasta onde clon
 ```
   pip install -r requirements.txt
 ```
-2. Execute o aplicativo
+2. Entre na pasta src, abra via terminal e execute o aplicativo
 ```
   python app.py
 ```
