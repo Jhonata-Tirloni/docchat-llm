@@ -4,16 +4,23 @@ from transformers import pipeline
 from modules.message_handler import send_message
 from modules.get_model import call_update_window
 from functools import partial
-
+from os import listdir
 analyze = False
 
 # Configuração do modelo
-modelPath = r"../docchat-llm/src/models"
-pipe = pipeline(
-    "text-generation",
-    model=modelPath,
-    device_map='auto'
-)
+if len(listdir(r"../docchat-llm/src/models")) > 1: 
+    modelPath = r"../docchat-llm/src/models"
+    pipe = pipeline(
+        "text-generation",
+        model=modelPath,
+        device_map='auto'
+    )
+
+else:
+    pipe = ""
+    tk.messagebox.showwarning(title="Atenção",
+                            message="Não foi encontrado nenhum modelo na pasta /src/models.\
+                                Baixe algum através da opção Menu > Atualizar na barra superior.")
 
 # Configuração da interface Tkinter
 root = tk.Tk()
@@ -23,11 +30,12 @@ root.geometry("400x650")
 
 menu_bar = tk.Menu()
 analysis_menu = tk.Menu(menu_bar, tearoff=False)
-analysis_menu.add_command(label="Pesquisar em documento",
+analysis_menu.add_command(label="Pesquisar em documento (em desenvolvimento)",
                           accelerator="Ctrl+O",
-                          command="")
+                          command="",
+                          state='disabled')
 model_menu = tk.Menu(menu_bar, tearoff=False)
-model_menu.add_command(label="Atualizar",
+model_menu.add_command(label="Atualizar/baixar modelo",
                        accelerator="Ctrl+U",
                        command=partial(call_update_window, root))
 
@@ -44,7 +52,12 @@ loading_label.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
 send_button = tk.Button(root,
                         text="Enviar mensagem",
                         command= partial(send_message,
-                                         user_entry, chat_window, loading_label, root, pipe, analyze))
+                                         user_entry, 
+                                         chat_window, 
+                                         loading_label, 
+                                         root,
+                                         pipe,
+                                         analyze))
 send_button.grid(row=1, column=1, padx=10, pady=10, sticky="ew")
 
 menu_bar.add_cascade(menu=model_menu, label="Modelo")

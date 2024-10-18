@@ -2,13 +2,14 @@ import tkinter as tk
 from tkinter import messagebox
 import threading
 from functools import partial
-from file_analyzer import send_analyze_file
+from modules.file_analyzer import send_analyze_file
 
 # Reads the config files in ../src/configs
 # The model_behavior.txt contains essencial text for the app to work, remember
 # to fill it! The api_consume.txt is optional
 model_behavior_file = open(r"../docchat-llm/src/configs/model_behavior.txt",
                            encoding='utf-8')
+global model_behavior
 model_behavior = model_behavior_file.read()
 model_behavior_file.close()
 
@@ -25,7 +26,6 @@ def send_message(user_entry, chat_window, loading_label, root, pipe, analyze):
         chat_window.config(state=tk.DISABLED)
         user_entry.delete("1.0", tk.END)
 
-        # Mostrar animação de carregamento
         loading_label.config(text="Refletindo sobre a resposta...")
         root.update_idletasks()
 
