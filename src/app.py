@@ -24,7 +24,7 @@ else:
 
 # Configuração da interface Tkinter
 root = tk.Tk()
-root.title("Rogerio")
+root.title("docchat-llm")
 root.resizable(False, False)
 root.geometry("400x650")
 
