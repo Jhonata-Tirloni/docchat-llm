@@ -2,14 +2,12 @@ import tkinter as tk
 from tkinter import messagebox
 import threading
 from functools import partial
-from modules.file_analyzer import send_analyze_file
 
 # Reads the config files in ../src/configs
 # The model_behavior.txt contains essencial text for the app to work, remember
 # to fill it! The api_consume.txt is optional
 model_behavior_file = open(r"../docchat-llm/src/configs/model_behavior.txt",
                            encoding='utf-8')
-global model_behavior
 model_behavior = model_behavior_file.read()
 model_behavior_file.close()
 
@@ -18,7 +16,7 @@ api_configs_file = open(r"../docchat-llm/src/configs/api_consume.txt",
 api_configs = api_configs_file.read()
 api_configs_file.close()
 
-def send_message(user_entry, chat_window, loading_label, root, pipe, analyze):
+def send_message(user_entry, chat_window, loading_label, root, pipe):
     user_input = user_entry.get("1.0", tk.END).strip()
     if user_input:
         chat_window.config(state=tk.NORMAL)
@@ -30,10 +28,9 @@ def send_message(user_entry, chat_window, loading_label, root, pipe, analyze):
         root.update_idletasks()
 
         # Iniciar thread para processar a mensagem
-        if analyze is False:
-            threading.Thread(target= partial(process_message, user_input, pipe, chat_window, loading_label, root)).start()
-        else:
-            threading.Thread(target= partial(send_analyze_file, user_input, pipe, chat_window, loading_label, root)).start()
+        threading.Thread(target= partial(process_message, user_input, pipe, chat_window, loading_label, root)).start()
+
+
 def process_message(user_input, pipe, chat_window, loading_label, root):
 
     messages = [

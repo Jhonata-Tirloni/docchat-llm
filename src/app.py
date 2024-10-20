@@ -5,7 +5,7 @@ from modules.message_handler import send_message
 from modules.get_model import call_update_window
 from functools import partial
 from os import listdir
-analyze = False
+
 
 # Configuração do modelo
 if len(listdir(r"../docchat-llm/src/models")) > 1: 
@@ -56,8 +56,7 @@ send_button = tk.Button(root,
                                          chat_window, 
                                          loading_label, 
                                          root,
-                                         pipe,
-                                         analyze))
+                                         pipe))
 send_button.grid(row=1, column=1, padx=10, pady=10, sticky="ew")
 
 menu_bar.add_cascade(menu=model_menu, label="Modelo")
