@@ -5,7 +5,11 @@
 Aplicativo simples feito para o teste e consumo básico de modelos LLM Text-to-Text. O aplicativo atua como uma interface de chat local, e realiza o download de modelos conforme inputado pelo usuário, utilizando-se deste para responder a prompts também inputados pelo usuário. 
 
 ## Como usar? 
-Execute os comandos abaixo via terminal de comando, de dentro da pasta onde clonou o repositório.
+Geralmente, um modelo LLM text-to-text pode se comportar como uma pessoa ou algum outro tipo de diretriz. Este comportamentopode ser configurado em ./src/configs, no arquivo model_behavior.txt. 
+Basta editar o arquivo e inserir alguma descrição de como você quer que o modelo se comporte.
+
+Caso não queira um comportamento específico, o arquivo já vem preenchido com um comportamento padrão.
+Depois disso, é hora de consumir o modelo! Execute os comandos abaixo via terminal de comando, de dentro da pasta onde clonou o repositório.
 1. Instale os pacotes necessários
 ```
   pip install -r requirements.txt
