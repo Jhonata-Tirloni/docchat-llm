@@ -6,15 +6,13 @@ from functools import partial
 # Reads the config files in ../src/configs
 # The model_behavior.txt contains essencial text for the app to work, remember
 # to fill it! The api_consume.txt is optional
-model_behavior_file = open(r"../docchat-llm/src/configs/model_behavior.txt",
-                           encoding='utf-8')
+
+# Read the model behavior file. This will controll how your model will react
+# based on the text you write for it
+model_behavior_file = open(r"./src/configs/model_behavior.txt", encoding="utf-8")
 model_behavior = model_behavior_file.read()
 model_behavior_file.close()
 
-api_configs_file = open(r"../docchat-llm/src/configs/api_consume.txt",
-                        encoding='utf-8')
-api_configs = api_configs_file.read()
-api_configs_file.close()
 
 def send_message(user_entry, chat_window, loading_label, root, pipe):
     user_input = user_entry.get("1.0", tk.END).strip()
@@ -28,31 +26,29 @@ def send_message(user_entry, chat_window, loading_label, root, pipe):
         root.update_idletasks()
 
         # Iniciar thread para processar a mensagem
-        threading.Thread(target= partial(process_message, user_input, pipe, chat_window, loading_label, root)).start()
+        threading.Thread(
+            target=partial(
+                process_message, user_input, pipe, chat_window, loading_label, root
+            )
+        ).start()
 
 
 def process_message(user_input, pipe, chat_window, loading_label, root):
 
-    messages = [
-        {
-            "role": "system",
-            "content": model_behavior
-        },
-        {
-            "role": "user",
-            "content": user_input
-        }
-    ]
+    messages = f"{model_behavior}\nUser: {user_input}\nAssistant:"
     try:
         # Obter a resposta do modelo
         output = pipe(messages, max_new_tokens=950)
-        response = output[0]["generated_text"][2]['content']
+        response = output[0]["generated_text"]
         # Mostrar a resposta no chat
         chat_window.config(state=tk.NORMAL)
-        chat_window.insert(tk.END, "Modelo: " + response + "\n", "blue_text")
+        chat_window.insert(
+            tk.END,
+            "Modelo: " + response.replace(messages, "").strip() + "\n",
+            "blue_text",
+        )
         chat_window.config(state=tk.DISABLED)
         loading_label.config(text="")
         root.update_idletasks()
     except Exception as e:
-        messagebox.showwarning("Attention, unexpected error",
-                            message=str(e))
+        messagebox.showwarning("Attention, unexpected error", message=str(e))

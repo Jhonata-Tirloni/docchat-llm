@@ -10,13 +10,44 @@ Basta editar o arquivo e inserir alguma descrição de como você quer que o mod
 
 Caso não queira um comportamento específico, o arquivo já vem preenchido com um comportamento padrão.
 Depois disso, é hora de consumir o modelo! Execute os comandos abaixo via terminal de comando, de dentro da pasta onde clonou o repositório.
-1. Instale os pacotes necessários
+
+
+1. Se você usa **windows** pode pular pra próxima etapa. Se você usa **MacOS** verifique se possui o brew instalado. Abra um terminal, digite e pressione enter:
+```
+  brew -v
+```
+Se aparecer algo como *Homebrew X.X.XX* então execute o comando:
+```
+  brew info python-tk
+```
+Se aparecer algo como:
+```
+  ==> python-tk@3.14: stable 3.14.0 (bottled)
+  Python interface to Tcl/Tk
+  https://www.python.org/
+  Installed
+```
+Então prossiga para a próxima etapa. Se não tiver o homebrew, ou se o comando info não aparecer o texto acima, execute o arquivo install_tkinter_macos.sh para instalar o brew e o TKINTER no seu MACOS. Ele é necessário para interface do app. Você pode fazer isso entrando com o terminal na pasta que clonou, e executando o comando:
+```
+  sh install_tkinter_macos.sh
+```
+
+2. Instale os pacotes necessários
 ```
   pip install -r requirements.txt
 ```
-2. Entre na pasta src, abra via terminal e execute o aplicativo
+ou
+```
+  pip3 install -r requirements.txt
+```
+
+3. Entre na pasta /src, abra via terminal e execute o aplicativo
 ```
   python app.py
+```
+ou
+```
+  python3 app.py
 ```
 
 ## Como eu baixo um modelo para usar?
